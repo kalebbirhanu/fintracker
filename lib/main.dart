@@ -66,16 +66,33 @@ class MyHomePage extends StatelessWidget {
         title: Text('FinTrack.'),
       ),
       body: SafeArea(
-      
-      child: Center(
-      child: Column(
-           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-         children: [
-          Text("Welcome to FinTrack."),
-          Text('Manage your money better'),
-         ],
-       
-         
-    ))));
+      child: Padding(
+          padding:const EdgeInsets.all(20),
+
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  width: double.infinity,
+                  height: 160,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  padding: const EdgeInsets.all(16),
+                   child: Column(
+                    children: [
+                    Text('Total Balance'),
+                   Text('ETB 25,000.00'),
+                  
+              ]),),
+              ]
+             
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
