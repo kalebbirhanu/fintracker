@@ -51,45 +51,45 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-   
 
-    final transactions = [{
-      'title': 'Groceries',
-      'date': 'Today',
-      'amount': -500,
-      'isIncome': false,
-    },
-    
-    {
+    final transactions = [
+      {
+        'title': 'Groceries',
+        'date': 'Today',
+        'amount': 500,
+        'isIncome': false,
+      },
+
+      {
         'title': 'Salary',
         'date': 'Yesterday',
         'amount': 8000,
         'isIncome': true,
       },
-    
-    {
-      'title': 'Transport',
-      'date': 'Monday',
-      'amount': -100,
-      'isIncome': false,
-    }
+
+      {
+        'title': 'Transport',
+        'date': 'Monday',
+        'amount': 100,
+        'isIncome': false,
+      },
     ];
-    
-    
 
     final transactionWidgets = List.generate(transactions.length, (index) {
-      
-     return ListTile(title: Text(transactions[index]['title'].toString()),
-      subtitle: Text(transactions[index]['date'].toString()),
-      trailing: Text(transactions[index]['amount'].toString()));
-    }
-
-      
-      
-      
-      
+  final amount = transactions[index]['amount'] as int;
+        final amountText = transactions[index]['isIncome'] == true ? '+ ${amount.abs()}'.toString() : '- ${amount.abs()}';
+      return ListTile(
+        title: Text(transactions[index]['title'].toString()),
+        subtitle: Text(transactions[index]['date'].toString()),
+        trailing: Text(amountText,
+        
+          style: TextStyle(
+            color: transactions[index]['isIncome'] == true ? Colors.green : Colors.red,
+          ),
+        ),
       );
-    
+    });
+
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
@@ -216,7 +216,7 @@ class MyHomePage extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
 
-               ...transactionWidgets,
+                ...transactionWidgets,
               ],
             ),
           ),
