@@ -132,6 +132,21 @@ class MyHomePage extends StatelessWidget {
                     ],
                   ),
                 ),
+                SizedBox(height: 8),
+
+                Container(
+                  width: double.infinity,
+                  height: 120,
+                  color: Colors.red,
+                  padding: EdgeInsets.all(16),
+
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+
+                    children: [Text("Expences"), SizedBox(height: 8), Text("ETB5000")],
+                  ),
+                ),
               ],
             ),
           ),
