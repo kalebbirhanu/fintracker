@@ -58,6 +58,7 @@ class MyHomePage extends StatelessWidget {
         'date': 'Today',
         'amount': 500,
         'isIncome': false,
+        'icon': Icons.shopping_cart,
       },
 
       {
@@ -65,6 +66,7 @@ class MyHomePage extends StatelessWidget {
         'date': 'Yesterday',
         'amount': 8000,
         'isIncome': true,
+        'icon': Icons.account_balance_wallet,
       },
 
       {
@@ -72,6 +74,7 @@ class MyHomePage extends StatelessWidget {
         'date': 'Monday',
         'amount': 100,
         'isIncome': false,
+        'icon': Icons.directions_bus,
       },
     ];
 
@@ -79,6 +82,7 @@ class MyHomePage extends StatelessWidget {
   final amount = transactions[index]['amount'] as int;
         final amountText = transactions[index]['isIncome'] == true ? '+ ${amount.abs()}'.toString() : '- ${amount.abs()}';
       return ListTile(
+        leading: Icon(transactions[index]['icon'] as IconData),
         title: Text(transactions[index]['title'].toString()),
         subtitle: Text(transactions[index]['date'].toString()),
         trailing: Text(amountText,
@@ -104,6 +108,7 @@ class MyHomePage extends StatelessWidget {
         title: Text('FinTrack.'),
       ),
       body: SafeArea(
+        child:  SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
 
@@ -222,6 +227,6 @@ class MyHomePage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }
