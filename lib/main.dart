@@ -110,11 +110,16 @@ class MyHomePage extends StatelessWidget {
                 SizedBox(height: 16),
                 Row(
                   children: [
-                    Container(
-                      width: double.infinity,
+                    Expanded(
+                 child:  Container(
+                      
                       height: 120,
 
-                      color: Colors.green,
+                     
+                        decoration: BoxDecoration(
+                           color: Colors.green,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
 
                       padding: EdgeInsets.all(16),
                       child: Column(
@@ -134,24 +139,40 @@ class MyHomePage extends StatelessWidget {
                         ],
                       ),
                     ),
+), 
+SizedBox(width: 12),
 
-                    Container(
-                      width: double.infinity,
+                   Expanded(
+                  child:   Container(
+                     
                       height: 120,
-                      color: Colors.red,
+                     
                       padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                         color: Colors.red,
+                        borderRadius: BorderRadius.circular(12)),
 
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
 
                         children: [
-                          Text("Expenses"),
+                          Text("Expenses",
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          ),
                           SizedBox(height: 8),
-                          Text("ETB 5,000"),
+                          Text("ETB 5,000",
+                          style: TextStyle(
+                            fontSize: 20,
+                          ),
+                          
+                          ),
                         ],
                       ),
-                    ),
+                    ),),
                   ],
                 ),
               ],
