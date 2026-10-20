@@ -83,6 +83,7 @@ class MyHomePage extends StatelessWidget {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'Total Balance',
@@ -97,7 +98,28 @@ class MyHomePage extends StatelessWidget {
                           color: Colors.white,
                         ),
                       ),
+                      SizedBox(height: 8),
+
+                      Text(
+                        'Available Balance',
+                        style: TextStyle(fontSize: 12, color: Colors.white70),
+                      ),
                     ],
+                  ),
+                ),
+
+                Container(
+                  width: double.infinity,
+                  height: 120,
+
+                  color: Colors.green,
+                  decoration: BoxDecoration(color: Colors.grey),
+
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [Text('Income'), Text('ETB 8000')],
                   ),
                 ),
               ],
