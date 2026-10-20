@@ -111,69 +111,78 @@ class MyHomePage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                 child:  Container(
-                      
-                      height: 120,
+                      child: Container(
+                        height: 120,
 
-                     
                         decoration: BoxDecoration(
-                           color: Colors.green,
+                          color: Colors.green,
                           borderRadius: BorderRadius.circular(12),
                         ),
 
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Income',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
+                        padding: EdgeInsets.all(16),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Income',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
 
-                          SizedBox(height: 8),
-                          Text('ETB 8000', style: TextStyle(fontSize: 20)),
-                        ],
+                            SizedBox(height: 8),
+                            Text('ETB 8000', style: TextStyle(fontSize: 20)),
+                          ],
+                        ),
                       ),
                     ),
-), 
-SizedBox(width: 12),
+                    SizedBox(width: 12),
 
-                   Expanded(
-                  child:   Container(
-                     
-                      height: 120,
-                     
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                         color: Colors.red,
-                        borderRadius: BorderRadius.circular(12)),
+                    Expanded(
+                      child: Container(
+                        height: 120,
 
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                        padding: EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
 
-                        children: [
-                          Text("Expenses",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          ),
-                          SizedBox(height: 8),
-                          Text("ETB 5,000",
-                          style: TextStyle(
-                            fontSize: 20,
-                          ),
-                          
-                          ),
-                        ],
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+
+                          children: [
+                            Text(
+                              "Expenses",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: 8),
+                            Text("ETB 5,000", style: TextStyle(fontSize: 20)),
+                          ],
+                        ),
                       ),
-                    ),),
+                    ),
                   ],
+                ),
+
+                SizedBox(height: 24),
+                Text('Recent Transactions'),
+                SizedBox(height: 12),
+                ListTile(
+                  leading: Icon(Icons.shopping_bag),
+                  title: Text('Groceries'),
+                  subtitle: Text('Today'),
+                  trailing: Text('- ETB 500',
+                  style: TextStyle(
+                    color: Colors.red,
+                  ),
+                  ),
                 ),
               ],
             ),
