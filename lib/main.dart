@@ -51,7 +51,45 @@ class MyHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
-    //
+   
+
+    final transactions = [{
+      'title': 'Groceries',
+      'date': 'Today',
+      'amount': -500,
+      'isIncome': false,
+    },
+    
+    {
+        'title': 'Salary',
+        'date': 'Yesterday',
+        'amount': 8000,
+        'isIncome': true,
+      },
+    
+    {
+      'title': 'Transport',
+      'date': 'Monday',
+      'amount': -100,
+      'isIncome': false,
+    }
+    ];
+    
+    
+
+    final transactionWidgets = List.generate(transactions.length, (index) {
+      
+     return ListTile(title: Text(transactions[index]['title'].toString()),
+      subtitle: Text(transactions[index]['date'].toString()),
+      trailing: Text(transactions[index]['amount'].toString()));
+    }
+
+      
+      
+      
+      
+      );
+    
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
     // than having to individually change instances of widgets.
@@ -177,31 +215,8 @@ class MyHomePage extends StatelessWidget {
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 12),
-                ListTile(
-                  leading: Icon(Icons.shopping_bag),
-                  title: Text('Groceries'),
-                  subtitle: Text('Today'),
-                  trailing: Text(
-                    '- ETB 500',
-                    style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                Divider(),
-                ListTile(
-                  leading: Icon(Icons.account_balance_wallet),
-                  title: Text('Salary'),
-                  subtitle: Text('Yesterday'),
-                  trailing: Text(
-                    '+ ETB 8,000',
-                    style: TextStyle(
-                      color: Colors.green,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+
+               ...transactionWidgets,
               ],
             ),
           ),
