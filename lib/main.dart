@@ -66,8 +66,8 @@ class MyHomePage extends StatelessWidget {
         title: Text('FinTrack.'),
       ),
       body: SafeArea(
-      child: Padding(
-          padding:const EdgeInsets.all(20),
+        child: Padding(
+          padding: const EdgeInsets.all(20),
 
           child: Center(
             child: Column(
@@ -81,14 +81,26 @@ class MyHomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                   ),
                   padding: const EdgeInsets.all(16),
-                   child: Column(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                    Text('Total Balance'),
-                   Text('ETB 25,000.00'),
-                  
-              ]),),
-              ]
-             
+                      Text(
+                        'Total Balance',
+                        style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      SizedBox(height: 8),
+                      Text(
+                        'ETB 25,000.00',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),
