@@ -108,44 +108,51 @@ class MyHomePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  height: 120,
+                Row(
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 120,
 
-                  color: Colors.green,
+                      color: Colors.green,
 
-                  padding: EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Income',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Income',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
+                          SizedBox(height: 8),
+                          Text('ETB 8000', style: TextStyle(fontSize: 20)),
+                        ],
                       ),
+                    ),
 
-                      SizedBox(height: 8),
-                      Text('ETB 8000', style: TextStyle(fontSize: 20)),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 8),
+                    Container(
+                      width: double.infinity,
+                      height: 120,
+                      color: Colors.red,
+                      padding: EdgeInsets.all(16),
 
-                Container(
-                  width: double.infinity,
-                  height: 120,
-                  color: Colors.red,
-                  padding: EdgeInsets.all(16),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
 
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [Text("Expences"), SizedBox(height: 8), Text("ETB5000")],
-                  ),
+                        children: [
+                          Text("Expenses"),
+                          SizedBox(height: 8),
+                          Text("ETB 5,000"),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
