@@ -172,16 +172,34 @@ class MyHomePage extends StatelessWidget {
                 ),
 
                 SizedBox(height: 24),
-                Text('Recent Transactions'),
+                Text(
+                  'Recent Transactions',
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
                 SizedBox(height: 12),
                 ListTile(
                   leading: Icon(Icons.shopping_bag),
                   title: Text('Groceries'),
                   subtitle: Text('Today'),
-                  trailing: Text('- ETB 500',
-                  style: TextStyle(
-                    color: Colors.red,
+                  trailing: Text(
+                    '- ETB 500',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
+                ),
+                Divider(),
+                ListTile(
+                  leading: Icon(Icons.account_balance_wallet),
+                  title: Text('Salary'),
+                  subtitle: Text('Yesterday'),
+                  trailing: Text(
+                    '+ ETB 8,000',
+                    style: TextStyle(
+                      color: Colors.green,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ],
