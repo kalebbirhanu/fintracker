@@ -287,7 +287,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Amount (ETB)',
-                      hintText: "Enteramount",
+                      hintText: "Enter amount",
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -313,6 +313,33 @@ class _MyHomePageState extends State<MyHomePage> {
                       }
                     },
                   ),
+
+SizedBox(height: 12),
+
+ElevatedButton(
+  onPressed: () {
+  final  title = titleController.text;
+  final int? amount = int.tryParse(amountController.text);
+
+  if(title.trim() == ''|| amount == null || amount <= 0) {
+    final snackBar = SnackBar(content: const Text('Enter a valid title and an amount greater than zero'));
+ScaffoldMessenger.of(context).showSnackBar(snackBar);
+return;
+  }
+    // Action to perform
+  },
+  child: Text('Add Transaction'),
+),
+
+
+
+
+
+
+
+
+
+
 
                   SizedBox(height: 24),
                   Text(
