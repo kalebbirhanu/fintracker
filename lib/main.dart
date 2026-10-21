@@ -1,3 +1,5 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -36,37 +38,52 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
-
   @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final titleController = TextEditingController();
+  final amountController = TextEditingController();
+
+  bool isIncome = false;
+
+  final transactions = [
+    {
+      'title': 'Groceries',
+      'date': 'Today',
+      'amount': 500,
+      'isIncome': false,
+      'icon': Icons.shopping_cart,
+    },
+
+    {
+      'title': 'Salary',
+      'date': 'Yesterday',
+      'amount': 8000,
+      'isIncome': true,
+      'icon': Icons.account_balance_wallet,
+    },
+
+    {
+      'title': 'Transport',
+      'date': 'Monday',
+      'amount': 100,
+      'isIncome': false,
+      'icon': Icons.directions_bus,
+    },
+  ];
+  @override
+  void dispose() {
+    titleController.dispose();
+  amountController.dispose();
+  super.dispose();
+  
+  }
+
   Widget build(BuildContext context) {
-    final transactions = [
-      {
-        'title': 'Groceries',
-        'date': 'Today',
-        'amount': 500,
-        'isIncome': false,
-        'icon': Icons.shopping_cart,
-      },
-
-      {
-        'title': 'Salary',
-        'date': 'Yesterday',
-        'amount': 8000,
-        'isIncome': true,
-        'icon': Icons.account_balance_wallet,
-      },
-
-      {
-        'title': 'Transport',
-        'date': 'Monday',
-        'amount': 100,
-        'isIncome': false,
-        'icon': Icons.directions_bus,
-      },
-    ];
-
     final totalIncome = transactions
         .where((transaction) {
           return transaction['isIncome'] == true;
@@ -93,6 +110,8 @@ class MyHomePage extends StatelessWidget {
         : 0.0;
 
     final totalBalance = totalIncome - totalExpenses;
+
+    final progressValue = (expensePercentage / 100).clamp(0.0, 1.0);
 
     final transactionWidgets = ListView.separated(
       itemCount: transactions.length,
@@ -173,7 +192,7 @@ class MyHomePage extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          height: 120,
+                          height: 140,
 
                           decoration: BoxDecoration(
                             color: Colors.green,
@@ -206,7 +225,7 @@ class MyHomePage extends StatelessWidget {
 
                       Expanded(
                         child: Container(
-                          height: 120,
+                          height: 140,
 
                           padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
@@ -232,13 +251,15 @@ class MyHomePage extends StatelessWidget {
                                 style: TextStyle(fontSize: 20),
                               ),
 
+                              SizedBox(height: 4),
+                              Text(
+                                'income spent: ${expensePercentage.toStringAsFixed(1)}%',
+                              ),
                               LinearProgressIndicator(
-                                value: expensePercentage / 100,
-                              backgroundColor: Colors.grey.shade100,
-                              color: Colors.red,
-                              minHeight: 10,
-                              
-                              
+                                value: progressValue,
+                                backgroundColor: Colors.grey.shade100,
+                                color: Colors.red,
+                                minHeight: 10,
                               ),
                             ],
                           ),
