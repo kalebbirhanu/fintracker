@@ -82,7 +82,15 @@ class MyHomePage extends StatelessWidget {
   final amount = transactions[index]['amount'] as int;
         final amountText = transactions[index]['isIncome'] == true ? '+ ${amount.abs()}'.toString() : '- ${amount.abs()}';
       return ListTile(
-        leading: Icon(transactions[index]['icon'] as IconData),
+        leading: Container(
+          padding: EdgeInsets.all(8),
+          decoration: BoxDecoration(
+borderRadius: BorderRadius.circular(12),
+color: transactions[index]['isIncome'] == true ? Colors.green : Colors.red
+),
+          child: Icon(transactions[index]['icon'] as IconData),),
+          
+
         title: Text(transactions[index]['title'].toString()),
         subtitle: Text(transactions[index]['date'].toString()),
         trailing: Text(amountText,
