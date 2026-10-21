@@ -67,13 +67,40 @@ class MyHomePage extends StatelessWidget {
       },
     ];
 
+    final totalIncome = transactions
+        .where((transaction) {
+          return transaction['isIncome'] == true;
+          // Keep only income transactions
+        })
+        .fold<int>(0, (sum, transaction) {
+          // Add each income amount to sum
+          return sum + (transaction['amount'] as int);
+        });
+
+    final totalExpenses = transactions
+        .where((transaction) {
+          // Keep only expenses
+          return transaction['isIncome'] == false;
+        })
+        .fold<int>(0, (sum, transaction) {
+          // Add the expense amount
+          return sum + (transaction['amount'] as int);
+        });
+
+ final totalBalance = totalIncome - totalExpenses;
+
     final transactionWidgets = ListView.separated(
       itemCount: transactions.length,
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        
-        return TransactionTile(title: transactions[index]['title'] as String, date: transactions[index]['date'] as String, amount: transactions[index]['amount'] as int, isIncome: transactions[index]['isIncome'] as bool, icon: transactions[index]['icon'] as IconData);
+        return TransactionTile(
+          title: transactions[index]['title'] as String,
+          date: transactions[index]['date'] as String,
+          amount: transactions[index]['amount'] as int,
+          isIncome: transactions[index]['isIncome'] as bool,
+          icon: transactions[index]['icon'] as IconData,
+        );
       },
       separatorBuilder: (context, index) {
         return Divider();
@@ -120,7 +147,7 @@ class MyHomePage extends StatelessWidget {
                         ),
                         SizedBox(height: 8),
                         Text(
-                          'ETB 25,000.00',
+                          '${NumberFormat('#,##0').format(totalBalance)} ETB',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
@@ -162,7 +189,10 @@ class MyHomePage extends StatelessWidget {
                               ),
 
                               SizedBox(height: 8),
-                              Text('ETB 8000', style: TextStyle(fontSize: 20)),
+                              Text(
+                                '${NumberFormat('#,##0').format(totalIncome)} ETB',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ],
                           ),
                         ),
@@ -192,7 +222,10 @@ class MyHomePage extends StatelessWidget {
                                 ),
                               ),
                               SizedBox(height: 8),
-                              Text("ETB 5,000", style: TextStyle(fontSize: 20)),
+                              Text(
+                                '${NumberFormat('#,##0').format(totalExpenses)} ETB',
+                                style: TextStyle(fontSize: 20),
+                              ),
                             ],
                           ),
                         ),
