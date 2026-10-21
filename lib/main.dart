@@ -72,41 +72,8 @@ class MyHomePage extends StatelessWidget {
       shrinkWrap: true,
       physics: NeverScrollableScrollPhysics(),
       itemBuilder: (context, index) {
-        final formatter = NumberFormat('#,##0');
-        final amount = transactions[index]['amount'] as int;
-        final amountText = transactions[index]['isIncome'] == true
-            ? '+ ${formatter.format(amount.abs())}'
-            : '- ${formatter.format(amount.abs())}';
-        return ListTile(
-          leading: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: transactions[index]['isIncome'] == true
-                  ? Colors.green.shade100
-                  : Colors.red.shade100,
-            ),
-            child: Icon(
-              transactions[index]['icon'] as IconData,
-
-              color: transactions[index]['isIncome'] == true
-                  ? Colors.green.shade800
-                  : Colors.red.shade800,
-            ),
-          ),
-
-          title: Text(transactions[index]['title'].toString()),
-          subtitle: Text(transactions[index]['date'].toString()),
-          trailing: Text(
-            '$amountText ETB',
-
-            style: TextStyle(
-              color: transactions[index]['isIncome'] == true
-                  ? Colors.green
-                  : Colors.red,
-            ),
-          ),
-        );
+        
+        return TransactionTile(title: transactions[index]['title'] as String, date: transactions[index]['date'] as String, amount: transactions[index]['amount'] as int, isIncome: transactions[index]['isIncome'] as bool, icon: transactions[index]['icon'] as IconData);
       },
       separatorBuilder: (context, index) {
         return Divider();
@@ -275,7 +242,7 @@ class TransactionTile extends StatelessWidget {
       leading: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isIncome ? const Color.fromARGB(255, 8, 10, 8) : Colors.red,
+          color: isIncome ? Colors.green : Colors.red,
           shape: BoxShape.circle,
         ),
         child: Icon(icon),
