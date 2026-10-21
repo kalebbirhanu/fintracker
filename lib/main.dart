@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -75,12 +73,12 @@ class _MyHomePageState extends State<MyHomePage> {
       'icon': Icons.directions_bus,
     },
   ];
+
   @override
   void dispose() {
     titleController.dispose();
-  amountController.dispose();
-  super.dispose();
-  
+    amountController.dispose();
+    super.dispose();
   }
 
   Widget build(BuildContext context) {
@@ -267,6 +265,31 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ],
                   ),
+                  SizedBox(height: 24),
+                  Text(
+                    'Add Transaction',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 12),
+
+                  TextField(
+                    controller: titleController,
+                    decoration: InputDecoration(
+                      labelText: 'Transaction title',
+                      hintText: 'e.g Groceries or Salary',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+
+                  TextField(
+                    controller: amountController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Amount (ETB)',
+                    hintText: "Enteramount",
+                    border: OutlineInputBorder(),
+                  )),
 
                   SizedBox(height: 24),
                   Text(
