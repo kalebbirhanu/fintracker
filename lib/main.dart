@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,19 +39,9 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
+  
 
     final transactions = [
       {
@@ -78,29 +69,49 @@ class MyHomePage extends StatelessWidget {
       },
     ];
 
-    final transactionWidgets = List.generate(transactions.length, (index) {
-  final amount = transactions[index]['amount'] as int;
-        final amountText = transactions[index]['isIncome'] == true ? '+ ${amount.abs()}'.toString() : '- ${amount.abs()}';
-      return ListTile(
+    final transactionWidgets = ListView.separated(itemCount: transactions.length, shrinkWrap: true,  physics: NeverScrollableScrollPhysics(), itemBuilder:(context, index) {
+
+      
+     
+      final formatter = NumberFormat('#,##0');
+      final amount = transactions[index]['amount'] as int;
+      final amountText = transactions[index]['isIncome'] == true
+          ? '+ ${formatter.format(amount.abs())}'
+          : '- ${formatter.format(amount.abs())}';
+     return ListTile(
         leading: Container(
           padding: EdgeInsets.all(8),
           decoration: BoxDecoration(
-borderRadius: BorderRadius.circular(12),
-color: transactions[index]['isIncome'] == true ? Colors.green : Colors.red
-),
-          child: Icon(transactions[index]['icon'] as IconData),),
-          
+            shape: BoxShape.circle,
+            color: transactions[index]['isIncome'] == true
+                ? Colors.green.shade100
+                : Colors.red.shade100,
+          ),
+          child: Icon(
+            transactions[index]['icon'] as IconData,
+
+            color: transactions[index]['isIncome'] == true
+                ? Colors.green.shade800
+                : Colors.red.shade800,
+          ),
+        ),
 
         title: Text(transactions[index]['title'].toString()),
         subtitle: Text(transactions[index]['date'].toString()),
-        trailing: Text(amountText,
-        
+        trailing: Text(
+          '$amountText ETB',
+
           style: TextStyle(
-            color: transactions[index]['isIncome'] == true ? Colors.green : Colors.red,
+            color: transactions[index]['isIncome'] == true
+                ? Colors.green
+                : Colors.red,
           ),
         ),
-      );
-    });
+      ); },
+       separatorBuilder: (context, index) {
+   return Divider();
+  });
+    
 
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
@@ -116,125 +127,145 @@ color: transactions[index]['isIncome'] == true ? Colors.green : Colors.red
         title: Text('FinTrack.'),
       ),
       body: SafeArea(
-        child:  SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20),
 
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 160,
-                  decoration: BoxDecoration(
-                    color: Colors.blue,
-                    borderRadius: BorderRadius.circular(16),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    height: 160,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Total Balance',
+                          style: TextStyle(fontSize: 16, color: Colors.white),
+                        ),
+                        SizedBox(height: 8),
+                        Text(
+                          'ETB 25,000.00',
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+
+                        Text(
+                          'Available Balance',
+                          style: TextStyle(fontSize: 12, color: Colors.white70),
+                        ),
+                      ],
+                    ),
                   ),
-                  padding: const EdgeInsets.all(16),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  SizedBox(height: 16),
+                  Row(
                     children: [
-                      Text(
-                        'Total Balance',
-                        style: TextStyle(fontSize: 16, color: Colors.white),
-                      ),
-                      SizedBox(height: 8),
-                      Text(
-                        'ETB 25,000.00',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                      Expanded(
+                        child: Container(
+                          height: 120,
+
+                          decoration: BoxDecoration(
+                            color: Colors.green,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+
+                          padding: EdgeInsets.all(16),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Income',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+
+                              SizedBox(height: 8),
+                              Text('ETB 8000', style: TextStyle(fontSize: 20)),
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 8),
+                      SizedBox(width: 12),
 
-                      Text(
-                        'Available Balance',
-                        style: TextStyle(fontSize: 12, color: Colors.white70),
+                      Expanded(
+                        child: Container(
+                          height: 120,
+
+                          padding: EdgeInsets.all(16),
+                          decoration: BoxDecoration(
+                            color: Colors.red,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+
+                            children: [
+                              Text(
+                                "Expenses",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 8),
+                              Text("ETB 5,000", style: TextStyle(fontSize: 20)),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-                SizedBox(height: 16),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        height: 120,
 
-                        decoration: BoxDecoration(
-                          color: Colors.green,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
+                  SizedBox(height: 24),
+                  Text(
+                    'Recent Transactions',
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                  SizedBox(height: 12),
 
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Income',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-
-                            SizedBox(height: 8),
-                            Text('ETB 8000', style: TextStyle(fontSize: 20)),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(width: 12),
-
-                    Expanded(
-                      child: Container(
-                        height: 120,
-
-                        padding: EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: Colors.red,
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-
-                          children: [
-                            Text(
-                              "Expenses",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            SizedBox(height: 8),
-                            Text("ETB 5,000", style: TextStyle(fontSize: 20)),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 24),
-                Text(
-                  'Recent Transactions',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(height: 12),
-
-                ...transactionWidgets,
-              ],
+                  transactionWidgets,
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
+  }
+}
+
+
+
+class TransactionTile extends StatelessWidget {
+final String title;
+final String date;
+final String amount;
+final String isIncome;
+final String IconData icon;
+
+
+
+  const TransactionTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox();
   }
 }
