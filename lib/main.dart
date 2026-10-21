@@ -87,7 +87,12 @@ class MyHomePage extends StatelessWidget {
           return sum + (transaction['amount'] as int);
         });
 
- final totalBalance = totalIncome - totalExpenses;
+    final expensePercentage = totalIncome > 0
+        ? (totalExpenses / totalIncome) *
+              100 // calculate the percentage here
+        : 0.0;
+
+    final totalBalance = totalIncome - totalExpenses;
 
     final transactionWidgets = ListView.separated(
       itemCount: transactions.length,
@@ -225,6 +230,15 @@ class MyHomePage extends StatelessWidget {
                               Text(
                                 '${NumberFormat('#,##0').format(totalExpenses)} ETB',
                                 style: TextStyle(fontSize: 20),
+                              ),
+
+                              LinearProgressIndicator(
+                                value: expensePercentage / 100,
+                              backgroundColor: Colors.grey.shade100,
+                              color: Colors.red,
+                              minHeight: 10,
+                              
+                              
                               ),
                             ],
                           ),
