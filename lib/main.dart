@@ -287,9 +287,32 @@ class _MyHomePageState extends State<MyHomePage> {
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       labelText: 'Amount (ETB)',
-                    hintText: "Enteramount",
-                    border: OutlineInputBorder(),
-                  )),
+                      hintText: "Enteramount",
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  SizedBox(height: 12),
+
+                  DropdownButtonFormField<bool>(
+                    initialValue: isIncome,
+
+                    decoration: InputDecoration(
+                      labelText: 'Transaction type',
+                      border: OutlineInputBorder(),
+                    ),
+
+                    items: [
+                      DropdownMenuItem(value: false, child: Text('Expense')),
+
+                      DropdownMenuItem(value: true, child: Text('Income')),
+                    ],
+
+                    onChanged: (value) {
+                      if (value != null) {
+                        setState(() {isIncome = value;});
+                      }
+                    },
+                  ),
 
                   SizedBox(height: 24),
                   Text(
