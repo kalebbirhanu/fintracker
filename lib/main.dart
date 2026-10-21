@@ -41,8 +41,6 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  
-
     final transactions = [
       {
         'title': 'Groceries',
@@ -69,49 +67,51 @@ class MyHomePage extends StatelessWidget {
       },
     ];
 
-    final transactionWidgets = ListView.separated(itemCount: transactions.length, shrinkWrap: true,  physics: NeverScrollableScrollPhysics(), itemBuilder:(context, index) {
+    final transactionWidgets = ListView.separated(
+      itemCount: transactions.length,
+      shrinkWrap: true,
+      physics: NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        final formatter = NumberFormat('#,##0');
+        final amount = transactions[index]['amount'] as int;
+        final amountText = transactions[index]['isIncome'] == true
+            ? '+ ${formatter.format(amount.abs())}'
+            : '- ${formatter.format(amount.abs())}';
+        return ListTile(
+          leading: Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: transactions[index]['isIncome'] == true
+                  ? Colors.green.shade100
+                  : Colors.red.shade100,
+            ),
+            child: Icon(
+              transactions[index]['icon'] as IconData,
 
-      
-     
-      final formatter = NumberFormat('#,##0');
-      final amount = transactions[index]['amount'] as int;
-      final amountText = transactions[index]['isIncome'] == true
-          ? '+ ${formatter.format(amount.abs())}'
-          : '- ${formatter.format(amount.abs())}';
-     return ListTile(
-        leading: Container(
-          padding: EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: transactions[index]['isIncome'] == true
-                ? Colors.green.shade100
-                : Colors.red.shade100,
+              color: transactions[index]['isIncome'] == true
+                  ? Colors.green.shade800
+                  : Colors.red.shade800,
+            ),
           ),
-          child: Icon(
-            transactions[index]['icon'] as IconData,
 
-            color: transactions[index]['isIncome'] == true
-                ? Colors.green.shade800
-                : Colors.red.shade800,
+          title: Text(transactions[index]['title'].toString()),
+          subtitle: Text(transactions[index]['date'].toString()),
+          trailing: Text(
+            '$amountText ETB',
+
+            style: TextStyle(
+              color: transactions[index]['isIncome'] == true
+                  ? Colors.green
+                  : Colors.red,
+            ),
           ),
-        ),
-
-        title: Text(transactions[index]['title'].toString()),
-        subtitle: Text(transactions[index]['date'].toString()),
-        trailing: Text(
-          '$amountText ETB',
-
-          style: TextStyle(
-            color: transactions[index]['isIncome'] == true
-                ? Colors.green
-                : Colors.red,
-          ),
-        ),
-      ); },
-       separatorBuilder: (context, index) {
-   return Divider();
-  });
-    
+        );
+      },
+      separatorBuilder: (context, index) {
+        return Divider();
+      },
+    );
 
     // The Flutter framework has been optimized to make rerunning build methods
     // fast, so that you can just rebuild anything that needs updating rather
@@ -251,21 +251,41 @@ class MyHomePage extends StatelessWidget {
   }
 }
 
-
-
 class TransactionTile extends StatelessWidget {
-final String title;
-final String date;
-final String amount;
-final String isIncome;
-final String IconData icon;
+  final String title;
+  final String date;
+  final int amount;
+  final bool isIncome;
+  final IconData icon;
 
-
-
-  const TransactionTile({super.key});
+  const TransactionTile({
+    super.key,
+    required this.title,
+    required this.date,
+    required this.amount,
+    required this.isIncome,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox();
+    final formatter = NumberFormat('#,##0');
+    final formattedAmount = formatter.format(amount.abs());
+    return ListTile(
+      leading: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: isIncome ? const Color.fromARGB(255, 8, 10, 8) : Colors.red,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon),
+      ),
+      title: Text(title),
+      subtitle: Text(date),
+      trailing: Text(
+        isIncome ? '+ $formattedAmount ETB' : '- $formattedAmount ETB',
+        style: TextStyle(color: isIncome ? Colors.green : Colors.red),
+      ),
+    );
   }
 }
