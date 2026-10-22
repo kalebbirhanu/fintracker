@@ -321,12 +321,27 @@ ElevatedButton(
   final  title = titleController.text;
   final int? amount = int.tryParse(amountController.text);
 
-  if(title.trim() == ''|| amount == null || amount <= 0) {
+  if(title.trim().isEmpty || amount == null || amount <= 0) {
     final snackBar = SnackBar(content: const Text('Enter a valid title and an amount greater than zero'));
 ScaffoldMessenger.of(context).showSnackBar(snackBar);
 return;
   }
+    
+    final newTransaction = {
+      'title': title,
+      'date': 'today',
+      'amount': amount,
+      'isIncome': isIncome,
+      'icon':  isIncome ? Icons.account_balance_wallet : Icons.shopping_cart,
+    };
+    
+    setState(() {
+      transactions.add(newTransaction);
+    });
     // Action to perform
+
+    titleController.clear();
+    amountController.clear();
   },
   child: Text('Add Transaction'),
 ),
