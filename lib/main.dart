@@ -81,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
     final totalIncome = transactions
         .where((transaction) {
@@ -111,6 +112,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final progressValue = (expensePercentage / 100).clamp(0.0, 1.0);
 
+  
+
     final transactionWidgets = ListView.separated(
       itemCount: transactions.length,
       shrinkWrap: true,
@@ -122,6 +125,11 @@ class _MyHomePageState extends State<MyHomePage> {
           amount: transactions[index]['amount'] as int,
           isIncome: transactions[index]['isIncome'] as bool,
           icon: transactions[index]['icon'] as IconData,
+          onDelete: () {
+           setState(() {
+             transactions.removeAt(index);
+           }); 
+          },
         );
       },
       separatorBuilder: (context, index) {
@@ -337,6 +345,7 @@ return;
     
     setState(() {
       transactions.add(newTransaction);
+      isIncome = false;
     });
     // Action to perform
 
@@ -380,6 +389,7 @@ class TransactionTile extends StatelessWidget {
   final int amount;
   final bool isIncome;
   final IconData icon;
+    final VoidCallback onDelete;
 
   const TransactionTile({
     super.key,
@@ -388,6 +398,7 @@ class TransactionTile extends StatelessWidget {
     required this.amount,
     required this.isIncome,
     required this.icon,
+    required this.onDelete,
   });
 
   @override
@@ -405,9 +416,17 @@ class TransactionTile extends StatelessWidget {
       ),
       title: Text(title),
       subtitle: Text(date),
-      trailing: Text(
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+      children: [
+        Text (
         isIncome ? '+ $formattedAmount ETB' : '- $formattedAmount ETB',
         style: TextStyle(color: isIncome ? Colors.green : Colors.red),
+      ),
+
+      IconButton(onPressed: onDelete,
+  icon: Icon(Icons.delete)),
+        ],
       ),
     );
   }
