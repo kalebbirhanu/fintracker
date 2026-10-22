@@ -81,17 +81,46 @@ showDialog(
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit Transaction'),
-          content: TextField(
+
+          content: Column(
+
+            children: [
+  TextField(
   controller: editTitle,
   decoration: InputDecoration(labelText: 'transaction title'),
   
           
         ),
+SizedBox(height: 12),
+              TextField(
+                controller: editAmount,
+                decoration: InputDecoration(labelText: 'transaction amount'),
+              ),
+
+            ],
+          ),
+          
+        
         
         actions: [
             TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text('OK'),
+              
+              onPressed: () {
+
+                final updateTitle = editTitle.text.trim();
+              final updateAmount = int.tryParse(editAmount.text);
+              if(updateTitle.isEmpty || updateAmount == null || updateAmount < 0) {
+
+                print("Enter a valid title and amount");
+             return;
+              }
+setState(() {
+  transactions[index]['title'] = updateTitle;
+  transactions[index]['amount'] = updateAmount;
+});
+
+              },
+              child: Text('save'),
             ),
           ],
         );
