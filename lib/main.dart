@@ -73,11 +73,45 @@ class _MyHomePageState extends State<MyHomePage> {
       'icon': Icons.directions_bus,
     },
   ];
+void _editTransaction (int index) {
+ final editTitle = TextEditingController(text: transactions[index]['title'].toString());
+final editAmount = TextEditingController(text: transactions[index]['amount'].toString());
+showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Edit Transaction'),
+          content: TextField(
+  controller: editTitle,
+  decoration: InputDecoration(labelText: 'transaction title'),
+  
+          
+        ),
+        
+        actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+
+
+
+
+}
+
+ 
+
+
 
   @override
   void dispose() {
     titleController.dispose();
     amountController.dispose();
+    
     super.dispose();
   }
 
