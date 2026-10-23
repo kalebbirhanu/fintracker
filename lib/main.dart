@@ -73,52 +73,50 @@ class _MyHomePageState extends State<MyHomePage> {
       'icon': Icons.directions_bus,
     },
   ];
-void _editTransaction (int index) {
- final editTitle = TextEditingController(text: transactions[index]['title'].toString());
-final editAmount = TextEditingController(text: transactions[index]['amount'].toString());
-showDialog(
+  void _editTransaction(int index) {
+    final editTitle = TextEditingController(
+      text: transactions[index]['title'].toString(),
+    );
+    final editAmount = TextEditingController(
+      text: transactions[index]['amount'].toString(),
+    );
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit Transaction'),
 
           content: Column(
-
             children: [
-  TextField(
-  controller: editTitle,
-  decoration: InputDecoration(labelText: 'transaction title'),
-  
-          
-        ),
-SizedBox(height: 12),
+              TextField(
+                controller: editTitle,
+                decoration: InputDecoration(labelText: 'transaction title'),
+              ),
+              SizedBox(height: 12),
               TextField(
                 controller: editAmount,
                 decoration: InputDecoration(labelText: 'transaction amount'),
               ),
-
             ],
           ),
-          
-        
-        
-        actions: [
+
+          actions: [
             TextButton(
-              
               onPressed: () {
-
                 final updateTitle = editTitle.text.trim();
-              final updateAmount = int.tryParse(editAmount.text);
-              if(updateTitle.isEmpty || updateAmount == null || updateAmount < 0) {
+                final updateAmount = int.tryParse(editAmount.text);
+                if (updateTitle.isEmpty ||
+                    updateAmount == null ||
+                    updateAmount < 0) {
+                  print("Enter a valid title and amount");
+                  return;
+                }
+                setState(() {
+                  transactions[index]['title'] = updateTitle;
+                  transactions[index]['amount'] = updateAmount;
+                });
 
-                print("Enter a valid title and amount");
-             return;
-              }
-setState(() {
-  transactions[index]['title'] = updateTitle;
-  transactions[index]['amount'] = updateAmount;
-});
-
+                Navigator.pop(context);
               },
               child: Text('save'),
             ),
@@ -126,21 +124,13 @@ setState(() {
         );
       },
     );
-
-
-
-
-}
-
- 
-
-
+  }
 
   @override
   void dispose() {
     titleController.dispose();
     amountController.dispose();
-    
+
     super.dispose();
   }
 
@@ -175,8 +165,6 @@ setState(() {
 
     final progressValue = (expensePercentage / 100).clamp(0.0, 1.0);
 
-  
-
     final transactionWidgets = ListView.separated(
       itemCount: transactions.length,
       shrinkWrap: true,
@@ -189,10 +177,17 @@ setState(() {
           isIncome: transactions[index]['isIncome'] as bool,
           icon: transactions[index]['icon'] as IconData,
           onDelete: () {
-           setState(() {
-             transactions.removeAt(index);
-           }); 
+            setState(() {
+              transactions.removeAt(index);
+            });
           },
+
+onEdit: () {
+ 
+    _editTransaction(index);
+  
+},
+
         );
       },
       separatorBuilder: (context, index) {
@@ -380,53 +375,53 @@ setState(() {
 
                     onChanged: (value) {
                       if (value != null) {
-                        setState(() {isIncome = value;});
+                        setState(() {
+                          isIncome = value;
+                        });
                       }
                     },
                   ),
 
-SizedBox(height: 12),
+                  SizedBox(height: 12),
 
-ElevatedButton(
-  onPressed: () {
-  final  title = titleController.text;
-  final int? amount = int.tryParse(amountController.text);
+                  ElevatedButton(
+                    onPressed: () {
+                      final title = titleController.text;
+                      final int? amount = int.tryParse(amountController.text);
 
-  if(title.trim().isEmpty || amount == null || amount <= 0) {
-    final snackBar = SnackBar(content: const Text('Enter a valid title and an amount greater than zero'));
-ScaffoldMessenger.of(context).showSnackBar(snackBar);
-return;
-  }
-    
-    final newTransaction = {
-      'title': title,
-      'date': 'today',
-      'amount': amount,
-      'isIncome': isIncome,
-      'icon':  isIncome ? Icons.account_balance_wallet : Icons.shopping_cart,
-    };
-    
-    setState(() {
-      transactions.add(newTransaction);
-      isIncome = false;
-    });
-    // Action to perform
+                      if (title.trim().isEmpty ||
+                          amount == null ||
+                          amount <= 0) {
+                        final snackBar = SnackBar(
+                          content: const Text(
+                            'Enter a valid title and an amount greater than zero',
+                          ),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                        return;
+                      }
 
-    titleController.clear();
-    amountController.clear();
-  },
-  child: Text('Add Transaction'),
-),
+                      final newTransaction = {
+                        'title': title,
+                        'date': 'today',
+                        'amount': amount,
+                        'isIncome': isIncome,
+                        'icon': isIncome
+                            ? Icons.account_balance_wallet
+                            : Icons.shopping_cart,
+                      };
 
+                      setState(() {
+                        transactions.add(newTransaction);
+                        isIncome = false;
+                      });
+                      // Action to perform
 
-
-
-
-
-
-
-
-
+                      titleController.clear();
+                      amountController.clear();
+                    },
+                    child: Text('Add Transaction'),
+                  ),
 
                   SizedBox(height: 24),
                   Text(
@@ -452,8 +447,8 @@ class TransactionTile extends StatelessWidget {
   final int amount;
   final bool isIncome;
   final IconData icon;
-    final VoidCallback onDelete;
-
+  final VoidCallback onDelete;
+final VoidCallback onEdit;
   const TransactionTile({
     super.key,
     required this.title,
@@ -462,6 +457,7 @@ class TransactionTile extends StatelessWidget {
     required this.isIncome,
     required this.icon,
     required this.onDelete,
+    required this.onEdit,
   });
 
   @override
@@ -481,14 +477,14 @@ class TransactionTile extends StatelessWidget {
       subtitle: Text(date),
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
-      children: [
-        Text (
-        isIncome ? '+ $formattedAmount ETB' : '- $formattedAmount ETB',
-        style: TextStyle(color: isIncome ? Colors.green : Colors.red),
-      ),
+        children: [
+          Text(
+            isIncome ? '+ $formattedAmount ETB' : '- $formattedAmount ETB',
+            style: TextStyle(color: isIncome ? Colors.green : Colors.red),
+          ),
 
-      IconButton(onPressed: onDelete,
-  icon: Icon(Icons.delete)),
+          IconButton(onPressed: onDelete, icon: Icon(Icons.delete)),
+          IconButton(onPressed: onEdit, icon: Icon(Icons.edit)),
         ],
       ),
     );
