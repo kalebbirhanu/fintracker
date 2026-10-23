@@ -73,20 +73,22 @@ class _MyHomePageState extends State<MyHomePage> {
       'icon': Icons.directions_bus,
     },
   ];
-  void _editTransaction(int index) {
+ Future<void> _editTransaction(int index) async {
     final editTitle = TextEditingController(
       text: transactions[index]['title'].toString(),
     );
     final editAmount = TextEditingController(
       text: transactions[index]['amount'].toString(),
     );
-    showDialog(
+   await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
           title: Text('Edit Transaction'),
 
           content: Column(
+mainAxisSize: MainAxisSize.min,
+
             children: [
               TextField(
                 controller: editTitle,
@@ -124,6 +126,8 @@ class _MyHomePageState extends State<MyHomePage> {
         );
       },
     );
+    editTitle.dispose();
+    editAmount.dispose();
   }
 
   @override
